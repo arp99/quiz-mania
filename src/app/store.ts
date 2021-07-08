@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
 import quizReducer from "./Features/Quiz/QuizSlice"
+import authReducer from "./Features/Auth/AuthSlice"
 
 export const store = configureStore({
     reducer : {
         quiz : quizReducer,
+        auth : authReducer
     }
 })
 // Infer the rootstate and the appdispatch types from the store itself 
