@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Box, SimpleGrid, VStack } from "@chakra-ui/react";
-import { Navbar } from "./Components/Navbar"
-import { QuizCard } from "./Components/QuizCard";
+import { Navbar, QuizCard } from "./Components"
 import { useAppDispatch, useAppSelector } from "../../app/Hooks/hooks"
 import { loadAllQuizzes, resetStatus } from "../../app/Features/Quiz/QuizSlice"
 import { ErrorAlert, Spinner } from "../../Components"
