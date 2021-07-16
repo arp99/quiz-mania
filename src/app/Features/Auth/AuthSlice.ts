@@ -30,7 +30,7 @@ export const AuthSlice = createSlice({
         logOutUser : ( state ) => {
             localStorage.removeItem("token")
             state.token = null
-            state.authError = "idle"
+            state.authStatus = "idle"
             state.authError = null
         },
         resetAuthState : ( state ) => {
