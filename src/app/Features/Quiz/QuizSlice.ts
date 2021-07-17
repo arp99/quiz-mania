@@ -9,7 +9,7 @@ export const loadAllQuizzes = createAsyncThunk("quizData/loadAllQuizzes" , async
 })
 
 /* TODO: 1.Create Thunk for fetching quiz by id */ 
-export const loadQuizById = createAsyncThunk("quizData/loadQuizById" , async ( reqArgs: { quizId : string , token : string } ) => {
+export const loadQuizById = createAsyncThunk("quizData/loadQuizById" , async ( reqArgs: { quizId : string , token : string | null } ) => {
     const { quizId , token } = reqArgs;
     const response = await fetchQuizById( quizId , token )
     console.log("Log from async thunk of quiz by id: " , { response })
@@ -25,6 +25,7 @@ const initialState : QuizInitialState = {
     currQuestionNumber: 0,
     currScore : 0,
     status : "idle",
+    currQuizLoadStatus : "idle",
     error : null //Question?: How to get built in type of error 
 }
 
@@ -40,6 +41,7 @@ export const QuizSlice = createSlice({
         },
         resetStatus : ( state ) => {
             state.status = "idle"
+            state.currQuizLoadStatus = "idle"
         }
     },
     extraReducers : (builder) => {
@@ -58,16 +60,16 @@ export const QuizSlice = createSlice({
         });
 
         builder.addCase(loadQuizById.pending , (state) => {
-            state.status = "loading"
+            state.currQuizLoadStatus = "loading"
             state.error = null
         });
         builder.addCase(loadQuizById.fulfilled , ( state , action ) => {
             console.log("In action fulfilled of quiz by id: " , action.payload )
-            state.currentQuiz = action.payload
-            state.status = "fulfilled"
+            state.currentQuiz = action.payload.quizData[0]
+            state.currQuizLoadStatus = "fulfilled"
         });
         builder.addCase(loadQuizById.rejected , ( state, action ) => {
-            state.status = "error"
+            state.currQuizLoadStatus = "error"
             state.error = action.error.message
         })
 
