@@ -12,18 +12,26 @@ import { InstructionIcon } from "./InstructionIcon"
 import { BsInfo } from "react-icons/bs";
 import { FcAlarmClock } from "react-icons/fc";
 
-export const InstructionContainer = ({ currentQuiz } : { currentQuiz : Quiz | null } ) => {
-     
+export const InstructionContainer = (
+    
+    { currentQuiz, setStartQuiz } 
+    : 
+    { 
+        currentQuiz : Quiz | null,
+        setStartQuiz : React.Dispatch<React.SetStateAction<boolean>> 
+    } ) => {
+    
+    const { name, questions } = { ...currentQuiz }    
     return (
         <VStack justify="center" h={'100vh'}  p={0} >
             <VStack boxShadow={'2xl'}  maxW="40vw" minH={'50vh'}  rounded={'xl'} p={8} bg={useColorModeValue('white', 'gray.700')}  >
                 <Center >
                     <InstructionIcon width="5rem" />
                 </Center>
-                <Heading>{ currentQuiz?.name }</Heading>
+                <Heading>{ name }</Heading>
                 <HStack alignSelf="flex-start" >
                     <BsInfo size="2rem" />
-                    <Text fontSize="lg" letterSpacing="0.15rem" >There are total {currentQuiz?.questions.length} questions</Text>
+                    <Text fontSize="lg" letterSpacing="0.15rem" >There are total { questions?.length } questions</Text>
                 </HStack>
                 <HStack alignSelf="flex-start">
                     <BsInfo size="2rem" />
@@ -58,6 +66,7 @@ export const InstructionContainer = ({ currentQuiz } : { currentQuiz : Quiz | nu
                         color={'white'} 
                         flex={'1 0 auto'} 
                         letterSpacing="0.15rem"
+                        onClick={()=>setStartQuiz(true)}
                     >
                     Start Quiz
                     </Button>
