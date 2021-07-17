@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Box, SimpleGrid, VStack } from "@chakra-ui/react";
 import { Navbar, QuizCard } from "./Components"
 import { useAppDispatch, useAppSelector } from "../../app/Hooks/hooks"
-import { loadAllQuizzes, resetStatus } from "../../app/Features/Quiz/QuizSlice"
+import { loadAllQuizzes } from "../../app/Features/Quiz/QuizSlice"
 import { ErrorAlert, Spinner } from "../../Components"
 
 export const Home = () => {
@@ -13,11 +13,7 @@ export const Home = () => {
         if( status === "idle" && allQuizes ===  null ){
             quizDispatch( loadAllQuizzes() )
         }
-        else if( status === "fulfilled" ){
-            quizDispatch( resetStatus() )
-        }
     },[ status , quizDispatch , allQuizes])
-    console.log({ allQuizes })
     return (
         <VStack>
             <Navbar />
@@ -32,7 +28,7 @@ export const Home = () => {
                     {
                         allQuizes !== null && 
                         allQuizes.map(({ _id , name , description , imageUrl }) =>(
-                            <QuizCard key={_id} QuizName={name} description={description} imageUrl={imageUrl} />
+                            <QuizCard key={_id} QuizName={name} description={description} imageUrl={imageUrl} quizId={_id} />
                         ))
                     }
                 </SimpleGrid>
