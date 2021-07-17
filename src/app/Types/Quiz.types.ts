@@ -33,6 +33,7 @@ export type QuizInitialState  = {
     currentQuiz : Quiz | null;
     currQuestionNumber : number;
     currScore : number;
-    status : "idle" | "loading" | "fulfilled" | "error"
+    status : "idle" | "loading" | "fulfilled" | "error";
     error : string | null | undefined;
+    currQuizLoadStatus : "idle" | "loading" | "fulfilled" | "error";
 }
