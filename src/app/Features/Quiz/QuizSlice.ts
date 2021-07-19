@@ -8,7 +8,6 @@ export const loadAllQuizzes = createAsyncThunk("quizData/loadAllQuizzes" , async
     return response.data.quizData
 })
 
-/* TODO: 1.Create Thunk for fetching quiz by id */ 
 export const loadQuizById = createAsyncThunk("quizData/loadQuizById" , async ( reqArgs: { quizId : string , token : string | null } ) => {
     const { quizId , token } = reqArgs;
     const response = await fetchQuizById( quizId , token )
@@ -23,6 +22,7 @@ const initialState : QuizInitialState = {
     allQuizes : null,
     currentQuiz : null,
     currQuestionNumber: 0,
+    optionClickDisabled: false,
     currScore : 0,
     status : "idle",
     currQuizLoadStatus : "idle",
@@ -42,6 +42,12 @@ export const QuizSlice = createSlice({
         resetStatus : ( state ) => {
             state.status = "idle"
             state.currQuizLoadStatus = "idle"
+        },
+        disableOptionClick : ( state ) => {
+            state.optionClickDisabled = true;
+        },
+        enableOptionClick : ( state ) => {
+            state.optionClickDisabled = false;
         }
     },
     extraReducers : (builder) => {
@@ -76,5 +82,13 @@ export const QuizSlice = createSlice({
     }
 })
 
-export const { updateScore , updateQuestionNumber , resetStatus} = QuizSlice.actions
+export const { 
+        
+    updateScore , 
+    updateQuestionNumber , 
+    resetStatus, 
+    disableOptionClick, 
+    enableOptionClick
+
+} = QuizSlice.actions
 export default QuizSlice.reducer
