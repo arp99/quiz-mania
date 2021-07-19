@@ -4,7 +4,7 @@ type Option = {
     isRight : boolean;
 }
 
-type Question  = {
+export type Question  = {
     _id : string;
     question : string;
     points : number;
@@ -32,6 +32,7 @@ export type QuizInitialState  = {
     allQuizes : AllQuizes | null;
     currentQuiz : Quiz | null;
     currQuestionNumber : number;
+    optionClickDisabled : boolean;
     currScore : number;
     status : "idle" | "loading" | "fulfilled" | "error";
     error : string | null | undefined;
