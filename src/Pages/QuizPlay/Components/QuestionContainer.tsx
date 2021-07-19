@@ -50,7 +50,7 @@ export const QuestionContainer = ({ currentQuiz } : { currentQuiz : Quiz | null 
                 <Grid templateColumns="1fr" gap={4} >
                     {
                         currentQuestion?.options?.map( option => {
-                            return <OptionsContainer { ...option } key={ option._id } />
+                            return <OptionsContainer { ...option }  currentQuestion={currentQuestion}   key={ option._id } />
                         })
                     }
                 </Grid>
