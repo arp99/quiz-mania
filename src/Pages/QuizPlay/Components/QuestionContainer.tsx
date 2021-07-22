@@ -7,7 +7,7 @@ import { Question, Quiz } from "../../../app/Types/Quiz.types";
 import { Spinner } from "../../../Components";
 import { OptionsContainer } from "./OptionsContainer";
 import { SubmitQuizBtn } from "./SubmitQuizBtn";
-import { Timer } from "./Timer";
+// import { Timer } from "./Timer";
 
 export const QuestionContainer = ({ currentQuiz } : { currentQuiz : Quiz | null }) => {
 
@@ -49,9 +49,9 @@ export const QuestionContainer = ({ currentQuiz } : { currentQuiz : Quiz | null 
                         <Text fontSize="lg" color="gray.500" >
                             Question: { currQuestionNumber + 1 }/ { questions?.length }
                         </Text>
-                        <Text fontSize="lg" color="gray.500" >
+                        {/* <Text fontSize="lg" color="gray.500" >
                             <Timer /> / { playTime } mins
-                        </Text>
+                        </Text> */}
                         <Text fontSize="lg" color="gray.500" >
                             Score : { currScore }
                         </Text>
