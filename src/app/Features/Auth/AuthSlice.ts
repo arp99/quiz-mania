@@ -19,7 +19,7 @@ export const signUpUser = createAsyncThunk("Auth/signUpUser", async ( reqArgs : 
 
 const initialState : AuthInitialState = {
     token : localStorage.getItem("token") || null,
-    authStatus :"idle",
+    authStatus : localStorage.getItem("token") ? "fulfilled" : "idle",
     authError : null
 }
 
