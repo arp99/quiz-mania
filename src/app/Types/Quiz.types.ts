@@ -35,6 +35,7 @@ export type QuizInitialState  = {
     optionClickDisabled : boolean;
     currScore : number;
     status : "idle" | "loading" | "fulfilled" | "error";
+    resultSubmittedStatus : "idle" | "loading" | "fulfilled" | "error";
     error : string | null | undefined;
     currQuizLoadStatus : "idle" | "loading" | "fulfilled" | "error";
 }
