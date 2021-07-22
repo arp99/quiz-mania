@@ -1,31 +1,35 @@
 import { Box, useColorModeValue } from "@chakra-ui/react"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { 
     disableOptionClick, 
     enableOptionClick, 
     updateScore, 
-    updateQuestionNumber, 
+    updateQuestionNumber,
 } from "../../../app/Features/Quiz/QuizSlice"
 import { useAppDispatch, useAppSelector } from "../../../app/Hooks/hooks"
 import { Question } from "../../../app/Types/Quiz.types"
 
 export const OptionsContainer = ( 
-    { _id , option, isRight , currentQuestion } 
+    { _id , option, isRight , currentQuestion, setShowSubmitBtn } 
     :
-    { _id: string; option: string; isRight: boolean, currentQuestion: Question }) => {
+    { 
+        _id: string; 
+        option: string; 
+        isRight: boolean; 
+        currentQuestion: Question; 
+        setShowSubmitBtn: React.Dispatch<React.SetStateAction<boolean>> 
+    }) => {
 
         const [ selectedId , setSelectedId ] = useState<string>('')
         const { optionClickDisabled, currentQuiz, currQuestionNumber } = useAppSelector(( state ) => state.quiz )
         const quizDispatch = useAppDispatch()
-        const navigate = useNavigate()
 
         const rightAnswer = useColorModeValue('green.200','green.500')
         const wrongAnswer = useColorModeValue('red.200', 'red.500')
         const defaultColor = useColorModeValue('gray.200', 'gray.800')
 
         const showNextQuestion = () => {
-            currQuestionNumber + 1 === currentQuiz?.questions.length ? navigate("/") : quizDispatch( updateQuestionNumber() )
+            currQuestionNumber + 1 === currentQuiz?.questions.length ? setShowSubmitBtn(true) : quizDispatch( updateQuestionNumber() )
         }
 
         const checkAnswerAndShowNextQuestion = () =>{
