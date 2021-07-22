@@ -12,3 +12,17 @@ export const fetchQuizById = ( quizId : string , token : string | null ) => {
         }
     })
 }
+
+export const submitQuizResults = ( quizId : string | undefined , score : number , token : string | null ) => {
+    
+    return axios.post(`https://quiz-mania-backend.arp99.repl.co/api/user/results`,{        
+            quizId,
+            score
+        },
+        {
+            headers : {
+                authorization : `Bearer ${token}`
+            }
+        }
+    )
+}

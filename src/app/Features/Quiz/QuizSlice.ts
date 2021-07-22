@@ -1,6 +1,6 @@
 import { createSlice , PayloadAction , createAsyncThunk } from "@reduxjs/toolkit"
 import { QuizInitialState } from "../../Types/Quiz.types"
-import { fetchAllQuizzes, fetchQuizById } from "./services/fetchQuizzes"
+import { fetchAllQuizzes, fetchQuizById, submitQuizResults } from "./services/fetchQuizzes"
 
 export const loadAllQuizzes = createAsyncThunk("quizData/loadAllQuizzes" , async () => {
     const response = await fetchAllQuizzes()
@@ -15,7 +15,22 @@ export const loadQuizById = createAsyncThunk("quizData/loadQuizById" , async ( r
     return response.data
 })
 
-
+export const submitResults = createAsyncThunk("quizData/submitResults" , async ( 
+    reqArgs : { 
+        quizId : string | undefined,
+        score : number, 
+        token : string | null 
+    },
+    { rejectWithValue }) => {
+        
+        try{
+            const { quizId , score , token } = reqArgs;
+            const response = await submitQuizResults( quizId , score , token )
+            return response.data;    
+        }catch(err){
+            return rejectWithValue(err.response.data)
+        }
+    })
 
 //create type for slice state which will be same as type of QuizData
 const initialState : QuizInitialState = {
@@ -25,6 +40,7 @@ const initialState : QuizInitialState = {
     optionClickDisabled: false,
     currScore : 0,
     status : "idle",
+    resultSubmittedStatus : "idle",
     currQuizLoadStatus : "idle",
     error : null //Question?: How to get built in type of error 
 }
@@ -77,7 +93,18 @@ export const QuizSlice = createSlice({
         builder.addCase(loadQuizById.rejected , ( state, action ) => {
             state.currQuizLoadStatus = "error"
             state.error = action.error.message
-        })
+        });
+        builder.addCase(submitResults.pending , (state) => {
+            state.resultSubmittedStatus = "loading"
+        });
+        builder.addCase(submitResults.fulfilled , ( state , action ) => {
+            console.log(" from extra reducer in submitResults: ", action.payload )
+            state.resultSubmittedStatus = "fulfilled"
+        });
+        builder.addCase(submitResults.rejected , ( state, action ) => {
+            console.log("Error payload in submit results:", action.payload )
+            state.resultSubmittedStatus = "error"
+        });
 
     }
 })
