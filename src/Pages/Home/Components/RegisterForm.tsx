@@ -10,7 +10,7 @@ import {
 
 } from "@chakra-ui/react"
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/Hooks/hooks"
+import { useAppDispatch } from "../../../app/Hooks/hooks"
 import { signUpUser } from "../../../app/Features/Auth/AuthSlice"
 
 
@@ -20,7 +20,6 @@ export const RegisterForm = ({ setUserRegistered } : {setUserRegistered : React.
     const [ email , setEmail ] =  useState<string>("")
     const [ password , setPassword ] =  useState<string>("")
 
-    const { authStatus } = useAppSelector((state) => state.auth )
     const authDispatch = useAppDispatch()
     const registerUser = async() => {
         authDispatch(signUpUser({ firstName : fName , lastName : lName ,email : email ,password }))
