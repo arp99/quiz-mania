@@ -17,7 +17,7 @@ export const QuizPlay = () => {
         if(!currentQuiz && token){
             quizDispatch( loadQuizById( { quizId , token } ))
         }
-    },[])
+    },[]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <VStack w={'100%'}>
