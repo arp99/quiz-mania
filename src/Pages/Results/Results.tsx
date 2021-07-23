@@ -1,4 +1,4 @@
-import { Box, Button, Center, Heading, Spacer, Text, useColorModeValue, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, Heading, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../app/Hooks/hooks';
 import { CelebrationIcon } from './components/CelebrationIcon';
