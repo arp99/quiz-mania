@@ -11,7 +11,7 @@ import { SubmitQuizBtn } from "./SubmitQuizBtn";
 
 export const QuestionContainer = ({ currentQuiz } : { currentQuiz : Quiz | null }) => {
 
-    const { playTime, questions } = { ...currentQuiz }
+    const { questions } = { ...currentQuiz }
     const { currQuestionNumber, currScore, resultSubmittedStatus } = useAppSelector( ( state ) =>state.quiz )
     
     //Question? : Is there any work around to get the value at curr index of array which might be undefined ?
