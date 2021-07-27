@@ -15,6 +15,7 @@ type UserProfileState  = {
     firstName : string;
     lastName : string;
     email : string;
+    attemptedQuiz : Array<any>;
     status : "idle" | "fulfilled" | "loading" | "error";
 }
 
@@ -22,6 +23,7 @@ const initialState : UserProfileState = {
     firstName : "",
     lastName : "",
     email : "",
+    attemptedQuiz : [],
     status : "idle"
 }
 
@@ -38,11 +40,12 @@ export const UserSlice = createSlice({
             state.status = "loading"
         });
         builder.addCase(getUserData.fulfilled , ( state, action ) =>{
-            const { firstName , lastName , email } = action.payload.userData;
+            const { firstName , lastName , email, attemptedQuiz } = action.payload.userData;
             console.log(action.payload)
             state.firstName = firstName;
             state.lastName = lastName;
             state.email = email;
+            state.attemptedQuiz = attemptedQuiz;
             state.status = "fulfilled"
         });
         builder.addCase(getUserData.rejected , ( state, action ) => {
