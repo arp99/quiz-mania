@@ -6,12 +6,14 @@ import {
     MenuItem 
 } from "@chakra-ui/react";
 import { FaRegUserCircle } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 import { logOutUser } from "../../../app/Features/Auth/AuthSlice"
 import { useAppDispatch } from "../../../app/Hooks/hooks"
 
 export const UserMenu = () => {
     const authDispatch = useAppDispatch()
-
+    const navigate = useNavigate()
+    
     return (
         <Menu>
             <MenuButton>
@@ -20,7 +22,7 @@ export const UserMenu = () => {
                 </Box>
             </MenuButton>
             <MenuList>
-                <MenuItem>User Profile</MenuItem>
+                <MenuItem onClick={()=>navigate("/user-profile")}>User Profile</MenuItem>
                 <MenuItem 
                     onClick={()=>{
                         authDispatch(logOutUser())
