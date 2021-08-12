@@ -2,6 +2,7 @@ import { Home, LoginForm, QuizPlay, RegisterForm } from "./Pages"
 import { Routes, Route } from "react-router-dom"
 import { PrivateRoute } from "./PrivateRoute/PrivateRoute"
 import { Results } from "./Pages/Results/Results"
+import "./App.css"
 
 function App() {
   return (
