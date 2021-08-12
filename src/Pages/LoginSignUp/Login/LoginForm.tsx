@@ -6,22 +6,26 @@ import {
     Image,
     Stack,
     Text,
+    useToast,
     VStack
 
 } from "@chakra-ui/react"
 import { AiOutlineLogin } from "react-icons/ai"
 import { useAppDispatch, useAppSelector } from "../../../app/Hooks/hooks"
-import { loginUser } from "../../../app/Features/Auth/AuthSlice"
+import { loginUser, resetAuthState } from "../../../app/Features/Auth/AuthSlice"
 import { Form, Formik } from "formik";
 import { ChakraFormController } from "../Components/ChakraFormController";
 import { useNavigate } from "react-router-dom";
 import LoginImage from "../assets/quiz-vector.jpg"
 import { FormValues } from "./FormConfig/FieldType";
 import { initialValues, validationSchema } from "./FormConfig";
+import { useEffect } from "react";
 
 export const LoginForm = () => {
     const { authStatus } = useAppSelector((state) => state.auth )
     const authDispatch = useAppDispatch()
+    const toast = useToast()
+    const navigate = useNavigate()
 
     const loginHandler = (values : FormValues , onSubmitProps : any)  =>{
         const { emailId, password } = values
@@ -31,7 +35,20 @@ export const LoginForm = () => {
             resetForm()
         }
     }
-    const navigate = useNavigate()
+
+    useEffect(()=>{
+        if( authStatus === "error" ){
+            toast({
+                title: "Wrong User Credentials",
+                status: "warning",
+                duration: 2000,
+                isClosable: true,
+                position:"top"
+            })
+
+            authDispatch( resetAuthState())
+        }
+    }, [ authStatus, toast, authDispatch ])
 
     return (
         <Grid h="100vh" templateColumns="repeat(2,1fr)" gap="24">
