@@ -6,28 +6,62 @@ import {
     Image,
     Stack,
     Text,
+    useToast,
     VStack
 
 } from "@chakra-ui/react"
-import { useAppDispatch } from "../../../app/Hooks/hooks"
-import { signUpUser } from "../../../app/Features/Auth/AuthSlice"
+import { useAppDispatch, useAppSelector } from "../../../app/Hooks/hooks"
+import { resetAuthState, signUpUser } from "../../../app/Features/Auth/AuthSlice"
 import { Form, Formik } from "formik";
 import { ChakraFormController } from "../Components/ChakraFormController";
 import { useNavigate } from "react-router-dom";
 import LoginImage from "../assets/quiz-vector.jpg"
 import { registerFormValues } from "./FormConfig/FieldType";
 import { initialValues, validationSchema } from "./FormConfig";
+import { useEffect } from "react";
 
 export const RegisterForm = () => {
     
     const authDispatch = useAppDispatch()
-
-    const registerUser = ( values : registerFormValues ) => {
+    const { registerStatus } = useAppSelector(( state ) => state.auth )
+    const toast = useToast()
+    const registerUser = ( values : registerFormValues , onSubmitProps : any) => {
         const { firstName, lastName, email, password } = values
         console.log("Register form data:", values)
+        const { resetForm , isSubmitting } = onSubmitProps
         authDispatch(signUpUser({ firstName, lastName, email, password }))
+        if(!isSubmitting){
+            resetForm()
+        }
     }
     const navigate = useNavigate()
+
+    useEffect(()=>{
+        if( registerStatus === "error" ){
+            toast({
+                title: "User already Exists!",
+                status: "warning",
+                duration: 3000,
+                isClosable: true,
+                position:"top"
+            })
+
+            authDispatch( resetAuthState())
+        }
+        else if( registerStatus === "fulfilled" ){
+            toast({
+                title: "Account Created Successfully!",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+                position:"top"
+            })
+            authDispatch( resetAuthState() )
+            setTimeout(()=>{
+                navigate("/login")
+            },3500)
+        }
+    }, [ registerStatus , toast , authDispatch, navigate ])
 
     return (
         <Grid h="100vh" templateColumns="repeat(2,1fr)" gap="24">
@@ -87,7 +121,13 @@ export const RegisterForm = () => {
                                 control="chakraFormInput"
                                 Required
                             />
-                            <Button type="submit">Register</Button>
+                            <Button 
+                                type="submit"
+                                isLoading = { registerStatus === "loading" }
+                                loadingText = "Creating Account"
+                            >
+                                Register
+                            </Button>
                         </VStack>
                     </Form>
                 </Formik>
