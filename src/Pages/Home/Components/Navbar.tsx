@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { 
     Button,
     Flex,
@@ -6,26 +5,12 @@ import {
     Text, 
 } from "@chakra-ui/react";
 import { UserMenu , DarkModeToggler } from "../Components"
-import { useAppSelector, useAppDispatch } from "../../../app/Hooks/hooks"
-import { getUserData } from "../../../app/Features/UserProfile/UsersSlice"
-import { logOutUser } from "../../../app/Features/Auth/AuthSlice"
+import { useAppSelector } from "../../../app/Hooks/hooks"
 import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
     const { token } = useAppSelector((state) => state.auth)
-    const { status } = useAppSelector((state)=> state.user)
-    const userDispatch = useAppDispatch()
-    const authDispatch = useAppDispatch()
-    useEffect(() => {
-        userDispatch( getUserData(token) )
-    }, [ userDispatch , token]);
-    
-    useEffect(()=>{
-        if(status === "error"){
-            authDispatch(logOutUser());
-        }
-    },[status , authDispatch])
-    console.log({status})
+
     const navigate = useNavigate()
 
     return (
