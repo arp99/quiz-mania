@@ -48,7 +48,19 @@ export const LoginForm = () => {
 
             authDispatch( resetAuthState())
         }
-    }, [ authStatus, toast, authDispatch ])
+        else if( authStatus === "fulfilled"){
+            toast({
+                title: "Login Sucessfull!",
+                status: "success",
+                duration: 2000,
+                isClosable: true,
+                position:"top"
+            })
+            setTimeout(()=>{
+                navigate("/")
+            },2500)
+        }
+    }, [ authStatus, toast, authDispatch, navigate ])
 
     return (
         <Grid h="100vh" templateColumns="repeat(2,1fr)" gap="24">
