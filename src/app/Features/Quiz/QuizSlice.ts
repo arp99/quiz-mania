@@ -37,7 +37,7 @@ const initialState : QuizInitialState = {
     allQuizes : null,
     currentQuiz : null,
     currQuestionNumber: 0,
-    optionClickDisabled: false,
+    optionsAnswered : {},
     currScore : 0,
     status : "idle",
     resultSubmittedStatus : "idle",
@@ -49,21 +49,32 @@ export const QuizSlice = createSlice({
     name : "quizData",
     initialState,
     reducers : {
-        updateScore : ( state , action : PayloadAction<number> ) =>{ //Payload will be points: may be negative or positive
-            state.currScore += action.payload
+        getTotalScore : ( state ) => {
+            let total = 0;
+            Object.values( state.optionsAnswered ).forEach( answer => {
+                total += answer.points
+            })
+            state.currScore = total
         },
-        updateQuestionNumber : (state) => {
+        nextQuestionNumber : (state) => {
             state.currQuestionNumber += 1
+        },
+        prevQuestionNumber : (state) => {
+            state.currQuestionNumber -= 1
+        },
+        addAnsweredOption : ( state , action : PayloadAction<{ questionId : string, optionId : string, points : number}> ) =>{
+            const { questionId, optionId, points } = action.payload
+            state.optionsAnswered[ questionId ] = { optionId , points }
+        },
+        resetCurrQuiz : (state) => {
+            state.currQuestionNumber = 0
+            state.currScore = 0
+            state.resultSubmittedStatus = "idle"
+            state.optionsAnswered = {}
         },
         resetStatus : ( state ) => {
             state.status = "idle"
             state.currQuizLoadStatus = "idle"
-        },
-        disableOptionClick : ( state ) => {
-            state.optionClickDisabled = true;
-        },
-        enableOptionClick : ( state ) => {
-            state.optionClickDisabled = false;
         }
     },
     extraReducers : (builder) => {
@@ -111,11 +122,11 @@ export const QuizSlice = createSlice({
 
 export const { 
         
-    updateScore , 
-    updateQuestionNumber , 
+    getTotalScore, 
+    nextQuestionNumber,
+    prevQuestionNumber,
+    resetCurrQuiz,
+    addAnsweredOption, 
     resetStatus, 
-    disableOptionClick, 
-    enableOptionClick
-
 } = QuizSlice.actions
 export default QuizSlice.reducer

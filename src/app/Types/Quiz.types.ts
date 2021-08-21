@@ -28,11 +28,15 @@ export type AllQuizes = Array<{
     imageUrl : string;
 }>
 
+type OptionsAnswered = {
+    [ key : string ] : { optionId : string; points : number }
+}
+
 export type QuizInitialState  = {
     allQuizes : AllQuizes | null;
     currentQuiz : Quiz | null;
     currQuestionNumber : number;
-    optionClickDisabled : boolean;
+    optionsAnswered : OptionsAnswered; 
     currScore : number;
     status : "idle" | "loading" | "fulfilled" | "error";
     resultSubmittedStatus : "idle" | "loading" | "fulfilled" | "error";

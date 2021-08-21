@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { submitResults } from '../../../app/Features/Quiz/QuizSlice';
+import { getTotalScore, submitResults } from '../../../app/Features/Quiz/QuizSlice';
 import { useAppDispatch, useAppSelector } from '../../../app/Hooks/hooks';
 
 export const SubmitQuizBtn = () => {
@@ -11,6 +11,7 @@ export const SubmitQuizBtn = () => {
     const navigate = useNavigate()
     
     const submitQuiz = async () => {
+        quizDispatch( getTotalScore())
         const reqArgs = {
                 quizId : currentQuiz?._id,
                 score : currScore,
