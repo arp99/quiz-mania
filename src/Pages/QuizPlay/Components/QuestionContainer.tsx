@@ -7,7 +7,7 @@ import { Question, Quiz } from "../../../app/Types/Quiz.types";
 import { Spinner } from "../../../Components";
 import { OptionsContainer } from "./OptionsContainer";
 import { SubmitQuizBtn } from "./SubmitQuizBtn";
-// import { Timer } from "./Timer";
+import { Timer } from "./Timer";
 
 export const QuestionContainer = ({ currentQuiz } : { currentQuiz : Quiz | null }) => {
 
@@ -38,10 +38,7 @@ export const QuestionContainer = ({ currentQuiz } : { currentQuiz : Quiz | null 
                 :
                 <Flex w="100vw" h="100vh">        
                     <VStack w="20%" bg="gray.600" px="4" >
-                        {/* Timer will be shown on top  */}
-                        {/* <Text fontSize="lg" color="gray.500" >
-                            <Timer /> / { playTime } mins
-                        </Text> */}
+                        <Timer />
                         {/* Current question no. out of total questions  */}
                         <Text fontSize="lg" color="gray.800" >
                             Question: { currQuestionNumber + 1 }/ { questions?.length }
