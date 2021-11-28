@@ -1,7 +1,7 @@
-import axios from "axios"
+import axios from "./axiosInstance"
 
 export const LoginUserWithCredentials = ( email : string , password : string ) =>{
-    return axios.post('https://quiz-mania-backend.arp99.repl.co/api/login',{
+    return axios.post('api/login',{
         email,
         password
     })
@@ -9,13 +9,13 @@ export const LoginUserWithCredentials = ( email : string , password : string ) =
 
 export const signUp = ( firstName : string , lastName : string | undefined , email : string , password : string) => {
     if(lastName?.length === 0){
-        return axios.post('https://quiz-mania-backend.arp99.repl.co/api/signup', {
+        return axios.post('api/signup', {
             firstName,
             email,
             password
         })
     }else{
-        return axios.post('https://quiz-mania-backend.arp99.repl.co/api/signup', {
+        return axios.post('api/signup', {
             firstName,
             lastName,
             email,
@@ -23,4 +23,3 @@ export const signUp = ( firstName : string , lastName : string | undefined , ema
         })
     }
 }
-
