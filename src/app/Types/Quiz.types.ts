@@ -28,14 +28,27 @@ export type AllQuizes = Array<{
     imageUrl : string;
 }>
 
+type OptionsAnswered = {
+    [ key : string ] : { optionId : string; points : number }
+}
+
+type UserInfo = {
+    firstName : string,
+    lastName : string | undefined,
+    quizName : string,
+    score : number
+}
+
 export type QuizInitialState  = {
     allQuizes : AllQuizes | null;
     currentQuiz : Quiz | null;
     currQuestionNumber : number;
-    optionClickDisabled : boolean;
+    optionsAnswered : OptionsAnswered; 
     currScore : number;
     status : "idle" | "loading" | "fulfilled" | "error";
+    leaderboard : [] | Array<UserInfo> | null;
     resultSubmittedStatus : "idle" | "loading" | "fulfilled" | "error";
     error : string | null | undefined;
     currQuizLoadStatus : "idle" | "loading" | "fulfilled" | "error";
+    leaderboardFetchStatus : "idle" | "loading" | "fulfilled" | "error";
 }

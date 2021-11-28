@@ -3,10 +3,10 @@ import { fetchUserData } from "./services/fetchUserData"
 
 export const getUserData  = createAsyncThunk("UserProfile/getUserData" , async (token : string | null, { rejectWithValue } ) => {
     try{
-        const response = await fetchUserData(token)
+        const response = await fetchUserData()
         console.log("From userSlice async thunk: " , { response })
         return response.data;
-    }catch(err){
+    }catch(err:any){
         return rejectWithValue(err.response.data)
     }
 })

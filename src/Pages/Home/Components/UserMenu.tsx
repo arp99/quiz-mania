@@ -5,15 +5,28 @@ import {
     MenuList,
     MenuItem 
 } from "@chakra-ui/react";
+import { useCallback } from "react";
+import { useEffect } from "react";
 import { FaRegUserCircle } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom";
 import { logOutUser } from "../../../app/Features/Auth/AuthSlice"
-import { useAppDispatch } from "../../../app/Hooks/hooks"
+import { getUserData } from "../../../app/Features/UserProfile/UsersSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/Hooks/hooks"
 
 export const UserMenu = () => {
     const authDispatch = useAppDispatch()
-    const navigate = useNavigate()
-    
+    const { token } = useAppSelector((state) => state.auth)
+    const { status, firstName } = useAppSelector((state)=> state.user)
+    const userDispatch = useAppDispatch()
+    const fetchUserData = useCallback(()=>{
+        userDispatch( getUserData(token) )
+    },[ token, userDispatch ])
+
+    useEffect(() => {
+        fetchUserData()
+    },[ fetchUserData ]);
+
+    console.log({status , firstName})
+    console.log("User menu rendered")
     return (
         <Menu>
             <MenuButton>
@@ -22,7 +35,7 @@ export const UserMenu = () => {
                 </Box>
             </MenuButton>
             <MenuList>
-                <MenuItem onClick={()=>navigate("/user-profile")}>User Profile</MenuItem>
+                <MenuItem>User Profile</MenuItem>
                 <MenuItem 
                     onClick={()=>{
                         authDispatch(logOutUser())

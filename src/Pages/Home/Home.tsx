@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Box, SimpleGrid, VStack } from "@chakra-ui/react";
-import { Navbar, QuizCard } from "./Components"
+import { QuizCard } from "./Components"
 import { useAppDispatch, useAppSelector } from "../../app/Hooks/hooks"
 import { loadAllQuizzes } from "../../app/Features/Quiz/QuizSlice"
 import { ErrorAlert, Spinner } from "../../Components"
@@ -15,8 +15,7 @@ export const Home = () => {
         }
     },[ status , quizDispatch , allQuizes])
     return (
-        <VStack>
-            <Navbar />
+        <VStack pt={8}>
             <Box p={8}>
                 <SimpleGrid columns={{sm:1,md:2,lg:3}} spacing="2.5rem" >
                     {

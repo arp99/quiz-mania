@@ -20,6 +20,7 @@ export const signUpUser = createAsyncThunk("Auth/signUpUser", async ( reqArgs : 
 const initialState : AuthInitialState = {
     token : localStorage.getItem("token") || null,
     authStatus : localStorage.getItem("token") ? "fulfilled" : "idle",
+    registerStatus : "idle",
     authError : null
 }
 
@@ -35,6 +36,7 @@ export const AuthSlice = createSlice({
         },
         resetAuthState : ( state ) => {
             state.authStatus = "idle"
+            state.registerStatus = "idle"
             state.authError  = null
         }
     },
@@ -55,16 +57,15 @@ export const AuthSlice = createSlice({
         });
 
         builder.addCase(signUpUser.pending , (state) => {
-            state.authStatus = "loading"
+            state.registerStatus = "loading"
             state.authError = null
         });
         builder.addCase(signUpUser.fulfilled , ( state , action ) => {
             console.log(" from extra reducer in signUpUser: ", action.payload )
-            state.token = action.payload
-            state.authStatus = "fulfilled"
+            state.registerStatus = "fulfilled"
         });
         builder.addCase(signUpUser.rejected , ( state ) => {
-            state.authStatus = "error"
+            state.registerStatus = "error"
         });
     }
 })

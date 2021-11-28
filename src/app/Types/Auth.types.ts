@@ -6,6 +6,7 @@ export type UserSignUpDetails  = {
 }
 export type AuthInitialState  = {
     token : string | null;
-    authStatus : "idle" | "fulfilled" | "loading" | "error"
+    authStatus : "idle" | "fulfilled" | "loading" | "error";
+    registerStatus : "idle" | "fulfilled" | "loading" | "error";
     authError : string | null 
 }
