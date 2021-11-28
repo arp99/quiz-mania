@@ -16,6 +16,7 @@ function App() {
         <PrivateRoute path="/quiz/:quizId" element={<QuizPlay />} />
         <PrivateRoute path="/profile" element={<Profile />} />
         <PrivateRoute path="/results" element={<Results />} />
+        <PrivateRoute path="/user-profile" element={<Userprofile />} />
       </Routes>
     </div>
   );
