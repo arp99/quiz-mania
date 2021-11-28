@@ -1,28 +1,19 @@
-import axios from "axios"
+import axios, { axiosAuthorization } from "../../Auth/services/axiosInstance"
 
 export const fetchAllQuizzes = () => {
-    return axios.get('https://quiz-mania-backend.arp99.repl.co/api/quizes')
+    return axios.get('api/quizes')
 }
 
-export const fetchQuizById = ( quizId : string , token : string | null ) => {
+export const fetchQuizById = ( quizId : string ) => {
     
-    return axios.get(`https://quiz-mania-backend.arp99.repl.co/api/quizes/${quizId}`,{
-        headers : {
-            authorization : `Bearer ${token}`
-        }
-    })
+    return axiosAuthorization.get(`api/quizes/${quizId}`)
 }
 
-export const submitQuizResults = ( quizId : string | undefined , score : number , token : string | null ) => {
+export const submitQuizResults = ( quizId : string | undefined , score : number ) => {
     
-    return axios.post(`https://quiz-mania-backend.arp99.repl.co/api/user/results`,{        
+    return axiosAuthorization.post(`api/user/results`,{        
             quizId,
             score
-        },
-        {
-            headers : {
-                authorization : `Bearer ${token}`
-            }
         }
     )
 }
