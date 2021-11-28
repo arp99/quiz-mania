@@ -9,7 +9,7 @@ import { QuestionContainer } from "./Components/QuestionContainer";
 
 export const QuizPlay = () => {
     const [ startQuiz , setStartQuiz ] = useState<boolean>(false);
-    const { currentQuiz, leaderboard } = useAppSelector((state)=>state.quiz)
+    const { currentQuiz, leaderboardFetchStatus } = useAppSelector((state)=>state.quiz)
     const { token } = useAppSelector((state) => state.auth)
     const quizDispatch = useAppDispatch()
     const { quizId } = useParams()
@@ -28,7 +28,7 @@ export const QuizPlay = () => {
     // Load the leaderboard for current quiz here 
     return (
         <VStack w={'100%'} minH="100vh">
-            { !currentQuiz && !leaderboard && <Spinner />}
+            { !currentQuiz && leaderboardFetchStatus === "loading" && <Spinner />}
             { currentQuiz && !startQuiz && <InstructionContainer currentQuiz={currentQuiz} setStartQuiz={setStartQuiz} /> }
             { currentQuiz && startQuiz &&  <QuestionContainer currentQuiz={currentQuiz} />}
         </VStack>

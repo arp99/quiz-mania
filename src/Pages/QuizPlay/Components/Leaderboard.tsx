@@ -7,9 +7,11 @@ import {
 import { useAppSelector } from "../../../app/Hooks/hooks";
 
 export const Leaderboard = () => {
-  const { leaderboard } = useAppSelector((state) => state.quiz);
+  const { leaderboard, leaderboardFetchStatus } = useAppSelector(
+    (state) => state.quiz
+  );
   console.log("Leaderboard:", leaderboard);
-  return (
+  return leaderboardFetchStatus === "fulfilled" ? (
     <Box w="full" h="full">
       <UnorderedList
         rounded="md"
@@ -19,7 +21,13 @@ export const Leaderboard = () => {
         mx="auto"
         h="auto"
       >
-        <Flex as="li" justifyContent="space-between"  borderBottom="1px" borderColor="gray.500" p="2">
+        <Flex
+          as="li"
+          justifyContent="space-between"
+          borderBottom="1px"
+          borderColor="gray.500"
+          p="2"
+        >
           <Box>
             <Text>Rank</Text>
           </Box>
@@ -30,22 +38,34 @@ export const Leaderboard = () => {
             <Text>Score</Text>
           </Box>
         </Flex>
-        {leaderboard?.map(({ firstName, lastName, quizName, score }, index ) => {
+        {leaderboard?.map(({ firstName, lastName, quizName, score }, index) => {
           return (
-            <Flex as="li" justifyContent="space-between" borderBottom="1px" borderColor="gray.500" p="2" key={index + firstName}>
+            <Flex
+              as="li"
+              justifyContent="space-between"
+              borderBottom="1px"
+              borderColor="gray.500"
+              p="2"
+              key={index + firstName}
+            >
               <Box>
-                <Text>{ index + 1}</Text>
+                <Text>{index + 1}</Text>
               </Box>
               <Box>
-                <Text>{firstName.toLocaleUpperCase()} {lastName !== undefined && lastName.toLocaleUpperCase()}</Text>
+                <Text>
+                  {firstName.toLocaleUpperCase()}{" "}
+                  {lastName !== undefined && lastName.toLocaleUpperCase()}
+                </Text>
               </Box>
               <Box>
-                <Text>{ score }</Text>
+                <Text>{score}</Text>
               </Box>
             </Flex>
           );
         })}
       </UnorderedList>
     </Box>
+  ) : (
+    <></>
   );
 };
