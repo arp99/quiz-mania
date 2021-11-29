@@ -44,11 +44,11 @@ export const QuizCard = ({
     }
     
     return (
-        <Box maxW="sm" borderRadius="lg" overflow="hidden" borderWidth="2px">
-            <Image src={imageUrl} alt="Quiz Image" aria-label="Quiz image" w="100%" h="15rem" />
+        <Box w="full" borderRadius="lg" overflow="hidden" borderWidth="2px">
+            <Image src={imageUrl} alt="Quiz Image" aria-label="Quiz image" w="100%" h={{ base:"10rem", md:"12rem" }} />
             <VStack p={4} align="flex-start">
                 <Box>
-                    <Heading>{QuizName}</Heading>
+                    <Heading fontSize={{ base:"2rem", md:"2.5rem", lg:"3rem" }}>{QuizName}</Heading>
                     <Text>{description}</Text>
                 </Box>
                 <Button 

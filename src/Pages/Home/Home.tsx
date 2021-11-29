@@ -15,9 +15,9 @@ export const Home = () => {
         }
     },[ status , quizDispatch , allQuizes])
     return (
-        <VStack pt={8}>
-            <Box p={8}>
-                <SimpleGrid columns={{sm:1,md:2,lg:3}} spacing="2.5rem" >
+        <VStack minH="100vh" w="full">
+            <Box px={["2rem","4rem","5rem"]} py="4rem" w="full">
+                <SimpleGrid columns={{sm:1,md:2,lg:3}} spacing="4.5rem" w="full">
                     {
                         status === "loading" &&  <Spinner />
                     }
