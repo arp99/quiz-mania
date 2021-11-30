@@ -1,29 +1,19 @@
 import { createSlice , createAsyncThunk } from "@reduxjs/toolkit"
+import { UserProfileInitialState } from "../../Types/User.types"
 import { fetchUserData } from "./services/fetchUserData"
 
-export const getUserData  = createAsyncThunk("UserProfile/getUserData" , async (token : string | null, { rejectWithValue } ) => {
-    try{
-        const response = await fetchUserData()
-        console.log("From userSlice async thunk: " , { response })
-        return response.data;
-    }catch(err:any){
-        return rejectWithValue(err.response.data)
-    }
+export const getUserData  = createAsyncThunk("UserProfile/getUserData" , async ( ) => {
+    const response = await fetchUserData()
+    console.log("From userSlice async thunk: " , { response })
+    return response.data;
 })
 
-type UserProfileState  = {
-    firstName : string;
-    lastName : string;
-    email : string;
-    attemptedQuiz : Array<any>;
-    status : "idle" | "fulfilled" | "loading" | "error";
-}
-
-const initialState : UserProfileState = {
+const initialState : UserProfileInitialState = {
     firstName : "",
     lastName : "",
     email : "",
     attemptedQuiz : [],
+    allLeaderBoards : {},
     status : "idle"
 }
 
@@ -41,15 +31,14 @@ export const UserSlice = createSlice({
         });
         builder.addCase(getUserData.fulfilled , ( state, action ) =>{
             const { firstName , lastName , email, attemptedQuiz } = action.payload.userData;
-            console.log(action.payload)
             state.firstName = firstName;
             state.lastName = lastName;
             state.email = email;
             state.attemptedQuiz = attemptedQuiz;
+            state.allLeaderBoards = action.payload.allLeaderBoard;
             state.status = "fulfilled"
         });
-        builder.addCase(getUserData.rejected , ( state, action ) => {
-            console.log("From extra reducers in User profile: ", action.payload)
+        builder.addCase(getUserData.rejected , ( state ) => {
             state.status = "error"
         })
     }
