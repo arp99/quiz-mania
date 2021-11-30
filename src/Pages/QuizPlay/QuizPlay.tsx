@@ -19,13 +19,12 @@ export const QuizPlay = () => {
             //fetch the leaderboard
         }
     },[]) // eslint-disable-line react-hooks/exhaustive-deps
-    
+
     useEffect(()=>{
         if( token ){
             quizDispatch( getLeaderBoard( { quizId }))
         }
     },[ quizDispatch, quizId, token ])
-    // Load the leaderboard for current quiz here 
     return (
         <VStack w={'100%'} minH="100vh">
             { !currentQuiz && leaderboardFetchStatus === "loading" && <Spinner />}

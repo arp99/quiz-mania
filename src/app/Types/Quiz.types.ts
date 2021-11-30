@@ -39,9 +39,14 @@ type UserInfo = {
     score : number
 }
 
+export type loadedQuiz = {
+    [ _id : string ] : Quiz
+}
+
 export type QuizInitialState  = {
     allQuizes : AllQuizes | null;
     currentQuiz : Quiz | null;
+    loadedQuizes : loadedQuiz;
     currQuestionNumber : number;
     optionsAnswered : OptionsAnswered; 
     currScore : number;

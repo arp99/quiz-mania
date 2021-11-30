@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/Hooks/hooks";
 import { loadQuizById } from "../../../app/Features/Quiz/QuizSlice"
 import { useToast } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const QuizCard = ({ 
         QuizName , 
@@ -18,7 +19,7 @@ export const QuizCard = ({
     }) => {
     const { authStatus, token } = useAppSelector((state) =>state.auth)
     const toast = useToast()
-    const { currentQuiz, currQuizLoadStatus } = useAppSelector((state)=>state.quiz)
+    const { currQuizLoadStatus } = useAppSelector((state)=>state.quiz)
     const quizDispatch = useAppDispatch()
     const navigate = useNavigate()
 
@@ -34,15 +35,13 @@ export const QuizCard = ({
               })
             }
             else{
-                if( !currentQuiz ){
-                    await quizDispatch( loadQuizById( { quizId , token } ))
-                    navigate(`/quiz/${quizId}`)
-                }else{
-                    navigate(`/quiz/${quizId}`)
-                }
+                setQuizLoading("loading")
+                await quizDispatch( loadQuizById( { quizId , token } ))
+                setQuizLoading("")
+                navigate(`/quiz/${quizId}`)
         }
     }
-    
+    const [ quizLoading, setQuizLoading ] = useState("idle")
     return (
         <Box w="full" borderRadius="lg" overflow="hidden" borderWidth="2px">
             <Image src={imageUrl} alt="Quiz Image" aria-label="Quiz image" w="100%" h={{ base:"10rem", md:"12rem" }} />
@@ -53,8 +52,8 @@ export const QuizCard = ({
                 </Box>
                 <Button 
                     colorScheme="teal" 
-                    isLoading={ currQuizLoadStatus === "loading" }
-                    loadingText={ "Loading Questions" }
+                    isLoading={ currQuizLoadStatus === "loading" && quizLoading === "loading" }
+                    loadingText={ "Please wait" }
                     px="2rem" 
                     size="lg" 
                     onClick={ ()=> QuizPlayButtonClicked() }
@@ -65,4 +64,3 @@ export const QuizCard = ({
         </Box>
     );
 }
-

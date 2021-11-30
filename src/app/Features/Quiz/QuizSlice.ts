@@ -13,7 +13,10 @@ export const loadQuizById = createAsyncThunk("quizData/loadQuizById" , async ( r
     const { quizId } = reqArgs;
     const response = await fetchQuizById( quizId )
     console.log("Log from async thunk of quiz by id: " , { response })
-    return response.data
+    return {
+        _id : quizId,
+        quizData : response.data.quizData
+    }
 })
 
 export const submitResults = createAsyncThunk("quizData/submitResults" , async ( 
@@ -26,6 +29,7 @@ export const submitResults = createAsyncThunk("quizData/submitResults" , async (
         
         try{
             const { quizId , score} = reqArgs;
+            console.log("Inside submitResults async thunk: score = ", score)
             const response = await submitQuizResults( quizId , score )
             return response.data;    
         }catch(err:any){
@@ -44,6 +48,7 @@ export const getLeaderBoard = createAsyncThunk("quizData/leaderboard", async ( r
 const initialState : QuizInitialState = {
     allQuizes : null,
     currentQuiz : null,
+    loadedQuizes : {},
     currQuestionNumber: 0,
     optionsAnswered : {},
     currScore : 0,
@@ -108,7 +113,12 @@ export const QuizSlice = createSlice({
         });
         builder.addCase(loadQuizById.fulfilled , ( state , action ) => {
             console.log("In action fulfilled of quiz by id: " , action.payload )
-            state.currentQuiz = action.payload.quizData[0]
+            const { _id, quizData } = action.payload
+            state.loadedQuizes = {
+                ...(state.loadedQuizes),
+                [_id] : quizData
+            }
+            state.currentQuiz = quizData[0]
             state.currQuizLoadStatus = "fulfilled"
         });
         builder.addCase(loadQuizById.rejected , ( state, action ) => {
@@ -148,6 +158,7 @@ export const {
     prevQuestionNumber,
     resetCurrQuiz,
     addAnsweredOption, 
-    resetStatus, 
+    resetStatus,
+    // setCurrentQuiz
 } = QuizSlice.actions
 export default QuizSlice.reducer
