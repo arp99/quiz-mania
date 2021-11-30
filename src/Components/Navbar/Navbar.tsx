@@ -40,7 +40,13 @@ export const Navbar = () => {
           <Text p="4" h="100%">
             <Link to="/">Home</Link>
           </Text>
-          <Text p="4" h="100%">
+          <Text
+            p="4"
+            h="100%"
+            onClick={() => {
+              dispatch(getUserData());
+            }}
+          >
             <Link to="/profile">Profile</Link>
           </Text>
           <ThemeToggler />
