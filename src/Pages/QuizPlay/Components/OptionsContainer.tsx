@@ -47,7 +47,7 @@ export const OptionsContainer = (
            <Checkbox 
                 isChecked={ isOptionChosen() } 
                 onChange={ ()=>optionChosenHandler() } 
-                size="lg"
+                size="md"
             />
             <Box 
                 as="button" 
@@ -55,8 +55,9 @@ export const OptionsContainer = (
                 h={'max-content'}
                 w="100%" 
                 rounded={'sm'} 
-                p={4} 
+                p={{ base :"0.5rem", md:"1rem" }} 
                 textAlign="left"
+                fontSize={{ base : "sm", md:"lg" }}
             >
                 { option }
             </Box> 
