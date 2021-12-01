@@ -4,8 +4,20 @@ import { PrivateRoute } from "./PrivateRoute/PrivateRoute"
 import { Results } from "./Pages/Results/Results"
 import "./App.css"
 import { Navbar } from "./Components"
+import { useAppDispatch } from "./app/Hooks/hooks"
+import jwt_decode from "jwt-decode"
+import { useEffect } from "react"
+import { logOutUser } from "./app/Features/Auth/AuthSlice"
+import { JwtType } from "./app/Types/Jwt.types"
 
 function App() {
+  const dispatch = useAppDispatch()
+  useEffect(()=>{
+    const token = localStorage.getItem("token")
+    if( token && jwt_decode<JwtType>(token).exp*1000 < Date.now() ){
+      dispatch( logOutUser() )
+    }
+  },[ dispatch ])
   return (
     <div className="App">
       <Navbar />
