@@ -1,6 +1,6 @@
 # [Plovex Quiz Mania](https://plovex-quiz-mania.netlify.app/)
 
-A quiz appication to test your frontend knowledge before interviews 😅
+A quiz application to test your frontend knowledge before interviews 😅
 
 ## **Local Setup**
 
