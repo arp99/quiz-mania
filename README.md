@@ -9,6 +9,8 @@ $ git clone https://github.com/arp99/quiz-mania.git
 $ cd quiz-mania
 $ npm install
 ```
+## **Backend Repo**
+https://github.com/arp99/quiz-mania-backend/tree/dev
 
 ## **Technologies Used**
 
