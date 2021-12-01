@@ -29,13 +29,13 @@ export const Results = () => {
                 numberOfPieces={80}
                 gravity={0.15}
             />
-            <VStack justify="center" h={'100vh'}  p={0} ref={confettiRef} >
-                <VStack boxShadow={'2xl'}  maxW="40vw" minH={'40vh'} justifyContent="space-between" rounded={'xl'} p={8} bg={useColorModeValue('white', 'gray.700')}  >
+            <VStack justify="center" h={'100vh'}  p={0} ref={confettiRef}>
+                <VStack boxShadow={'2xl'} w={{ base :"80%", md:"50%", lg:"40%" }} minH={'40vh'} justifyContent="space-between" rounded={'xl'} p={8} bg={useColorModeValue('white', 'gray.700')}  >
                     <Box>
                         <Center>
                             <CelebrationIcon width="5rem" />
                         </Center>
-                        <Heading>Congratulations !!</Heading>
+                        <Heading fontSize={{ base :"2xl", md:"3xl" }}>Congratulations !!</Heading>
                         <Text fontSize="lg" letterSpacing="0.15rem" align="center" >
                             You scored : { currScore } / 40
                         </Text>
