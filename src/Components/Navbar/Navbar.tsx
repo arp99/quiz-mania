@@ -2,13 +2,15 @@ import { Flex, Box, Text, useColorModeValue, Image } from "@chakra-ui/react";
 import { ThemeToggler } from "./ThemeToggler";
 import logo from "../../assets/light-bulb.png";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../app/Hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/Hooks/hooks";
 import { getUserData } from "../../app/Features/UserProfile/UsersSlice";
 
 export const Navbar = () => {
   const navText = useColorModeValue("gray.900", "white");
   const navBg = useColorModeValue("white", "pallet1.navyBlue");
   const dispatch = useAppDispatch();
+  const { token } = useAppSelector((state) => state.auth);
+
   return (
     <Box
       w="100%"
@@ -49,7 +51,7 @@ export const Navbar = () => {
               dispatch(getUserData());
             }}
           >
-            <Link to="/profile">Profile</Link>
+            <Link to="/profile">{token ? "Profile" : "Login"}</Link>
           </Text>
           <ThemeToggler />
         </Flex>
@@ -71,7 +73,7 @@ export const Navbar = () => {
           <Link to="/">Home</Link>
         </Text>
         <Text p="4" h="100%">
-          <Link to="/profile">Profile</Link>
+          <Link to="/profile">{token ? "Profile" : "Login"}</Link>
         </Text>
         <ThemeToggler />
       </Flex>
