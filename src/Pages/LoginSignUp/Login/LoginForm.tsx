@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/Hooks/hooks";
 import {
   loginUser,
   resetAuthState,
+  guestLogin,
 } from "../../../app/Features/Auth/AuthSlice";
 import { Form, Formik } from "formik";
 import { ChakraFormController } from "../Components/ChakraFormController";
@@ -22,7 +23,9 @@ import { initialValues, validationSchema } from "./FormConfig";
 import { useEffect } from "react";
 
 export const LoginForm = () => {
-  const { authStatus } = useAppSelector((state) => state.auth);
+  const { authStatus, guestLoginStatus } = useAppSelector(
+    (state) => state.auth
+  );
   const authDispatch = useAppDispatch();
   const toast = useToast();
   const navigate = useNavigate();
@@ -97,14 +100,32 @@ export const LoginForm = () => {
                 control="chakraFormInput"
                 Required
               />
-              <Button
-                rightIcon={<AiOutlineLogin />}
-                type="submit"
-                isLoading={authStatus === "loading"}
-                loadingText="Logging in"
+              <Flex
+                justifyContent={"space-between"}
+                w={{ base: "100%", lg: "75%" }}
               >
-                Login
-              </Button>
+                <Button
+                  rightIcon={<AiOutlineLogin />}
+                  type="submit"
+                  isLoading={authStatus === "loading"}
+                  loadingText="Logging in"
+                >
+                  Login
+                </Button>
+                <Button
+                  rightIcon={<AiOutlineLogin />}
+                  type="button"
+                  isLoading={guestLoginStatus === "loading"}
+                  loadingText="Logging in"
+                  onClick={() =>
+                    authDispatch(
+                      guestLogin({ email: "test@gmail.com", password: "1234" })
+                    )
+                  }
+                >
+                  Guest Login
+                </Button>
+              </Flex>
             </VStack>
           </Form>
         </Formik>
