@@ -5,14 +5,12 @@ import { fetchAllQuizzes, fetchQuizById, submitQuizResults } from "./services/fe
 
 export const loadAllQuizzes = createAsyncThunk("quizData/loadAllQuizzes" , async () => {
     const response = await fetchAllQuizzes()
-    console.log("log from async thunk of all quizzes: ", {response})
     return response.data.quizData
 })
 
 export const loadQuizById = createAsyncThunk("quizData/loadQuizById" , async ( reqArgs: { quizId : string , token : string | null } ) => {
     const { quizId } = reqArgs;
     const response = await fetchQuizById( quizId )
-    console.log("Log from async thunk of quiz by id: " , { response })
     return {
         _id : quizId,
         quizData : response.data.quizData
@@ -29,7 +27,6 @@ export const submitResults = createAsyncThunk("quizData/submitResults" , async (
         
         try{
             const { quizId , score} = reqArgs;
-            console.log("Inside submitResults async thunk: score = ", score)
             const response = await submitQuizResults( quizId , score )
             return response.data;    
         }catch(err:any){
@@ -40,7 +37,6 @@ export const submitResults = createAsyncThunk("quizData/submitResults" , async (
 export const getLeaderBoard = createAsyncThunk("quizData/leaderboard", async ( reqArgs : { quizId : string }) => {
     const { quizId } = reqArgs
     const response = await fetchLeaderBoard( quizId )
-    console.log("Insude async thunk of getLeaderBoard: ", { response })
     return response.data
 })
 
@@ -98,7 +94,6 @@ export const QuizSlice = createSlice({
             state.error =  null;
         });
         builder.addCase(loadAllQuizzes.fulfilled , ( state , action ) => {
-            console.log("In action fulfilled" , action.payload)
             state.allQuizes = action.payload
             state.status = "fulfilled"
         });
@@ -112,7 +107,6 @@ export const QuizSlice = createSlice({
             state.error = null
         });
         builder.addCase(loadQuizById.fulfilled , ( state , action ) => {
-            console.log("In action fulfilled of quiz by id: " , action.payload )
             const { _id, quizData } = action.payload
             state.loadedQuizes = {
                 ...(state.loadedQuizes),
@@ -129,18 +123,15 @@ export const QuizSlice = createSlice({
             state.resultSubmittedStatus = "loading"
         });
         builder.addCase(submitResults.fulfilled , ( state , action ) => {
-            console.log(" from extra reducer in submitResults: ", action.payload )
             state.resultSubmittedStatus = "fulfilled"
         });
         builder.addCase(submitResults.rejected , ( state, action ) => {
-            console.log("Error payload in submit results:", action.payload )
             state.resultSubmittedStatus = "error"
         });
         builder.addCase(getLeaderBoard.pending, ( state ) => {
             state.leaderboardFetchStatus = "loading"
         });
         builder.addCase(getLeaderBoard.fulfilled, ( state, action ) => {
-            console.log("Inside extra reducer of getLeaderBoard: ", action.payload )
             state.leaderboard = action.payload.leaderBoard
             state.leaderboardFetchStatus = "fulfilled"
         });

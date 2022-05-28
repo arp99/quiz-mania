@@ -21,7 +21,6 @@ export const SubmitQuizBtn = () => {
   const quizDispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log("Inside submit button: ", { currScore });
   const submitQuiz = async () => {
     const reqArgs = {
       quizId: currentQuiz?._id,

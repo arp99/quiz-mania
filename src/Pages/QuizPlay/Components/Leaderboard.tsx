@@ -9,7 +9,6 @@ export const Leaderboard = () => {
   const { leaderboard, leaderboardFetchStatus } = useAppSelector(
     (state) => state.quiz
   );
-  console.log("Leaderboard:", leaderboard);
   return leaderboardFetchStatus === "fulfilled" ? (
     <Box w="full" h="full">
       <UnorderedList

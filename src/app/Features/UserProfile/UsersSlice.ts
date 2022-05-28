@@ -4,7 +4,6 @@ import { fetchUserData } from "./services/fetchUserData"
 
 export const getUserData  = createAsyncThunk("UserProfile/getUserData" , async ( ) => {
     const response = await fetchUserData()
-    console.log("From userSlice async thunk: " , { response })
     return response.data;
 })
 

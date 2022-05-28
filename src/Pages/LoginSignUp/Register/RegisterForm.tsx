@@ -25,7 +25,6 @@ export const RegisterForm = () => {
   const toast = useToast();
   const registerUser = (values: registerFormValues, onSubmitProps: any) => {
     const { firstName, lastName, email, password } = values;
-    console.log("Register form data:", values);
     const { resetForm, isSubmitting } = onSubmitProps;
     authDispatch(signUpUser({ firstName, lastName, email, password }));
     if (!isSubmitting) {
