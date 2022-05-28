@@ -44,6 +44,7 @@ export const QuestionContainer = ({
   const currentQuestion = getQuestion(currQuestionNumber, questions);
   const themeBgColor = useColorModeValue("white", "gray.700");
   const themeTextColor = useColorModeValue("gray.800", "gray.100");
+  const themeBgColor1 = useColorModeValue("gray.300", "gray.700");
 
   return (
     <>
@@ -68,7 +69,7 @@ export const QuestionContainer = ({
               <Text
                 fontSize={{ base: "sm", md: "lg" }}
                 color={themeTextColor}
-                bg="gray.300"
+                bg={themeBgColor1}
                 p={{ base: "0.5rem", md: "1rem" }}
               >
                 Question: {currQuestionNumber + 1}/ {questions?.length}

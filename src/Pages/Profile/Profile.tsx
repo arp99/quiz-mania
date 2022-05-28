@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Button, Icon } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, Icon, useColorModeValue } from "@chakra-ui/react";
 import { BiLogOut } from "react-icons/bi";
 import { useAppDispatch, useAppSelector } from "../../app/Hooks/hooks";
 import { logOutUser } from "../../app/Features/Auth/AuthSlice";
@@ -19,15 +19,21 @@ export const Profile = () => {
     }
     setLeaderBoardQuizId(attemptedQuiz[0]?.quizId._id);
   }, [status, dispatch, setLeaderBoardQuizId, attemptedQuiz]);
+
+  const themeBg = useColorModeValue("gray.200", "gray.600");
+  const themeTextColor = useColorModeValue("gray.800", "white");
+  const themeBorder = useColorModeValue("gray.600", "gray.700")
+
   return (
     <Flex h="100vh" w="100%" alignItems="center" justifyContent="center">
       {status === "loading" && <Spinner />}
       {status === "fulfilled" && (
         <Box
           boxShadow="lg"
-          bg="gray.200"
+          bg={themeBg}
           minH="70%"
           w={{ base: "90%", md: "70%", lg: "50%" }}
+          textColor={themeTextColor}
         >
           <Flex
             w="full"
@@ -38,7 +44,6 @@ export const Profile = () => {
             borderColor="gray.500"
           >
             <Text
-              textColor="gray.700"
               textTransform="capitalize"
               fontWeight="600"
               fontSize="1.5rem"
@@ -46,7 +51,6 @@ export const Profile = () => {
               Dashboard
             </Text>
             <Text
-              textColor="gray.700"
               textTransform="capitalize"
               fontWeight="600"
               fontSize="1.5rem"
@@ -72,12 +76,11 @@ export const Profile = () => {
               <Box
                 w="90%"
                 border="2px"
-                borderColor="gray.600"
+                borderColor={themeBorder}
                 borderBottom="0"
                 maxH="90%"
                 overflowY="auto"
                 boxShadow="2xl"
-                color="gray.700"
                 mx="auto"
               >
                 <Flex
@@ -85,7 +88,7 @@ export const Profile = () => {
                   justifyContent="space-between"
                   p="2"
                   borderBottom="2px"
-                  borderColor="gray.600"
+                  borderColor={themeBorder}
                 >
                   <Text fontSize="xl">Quiz</Text>
                   <Text fontSize="xl">Score</Text>
@@ -96,7 +99,7 @@ export const Profile = () => {
                     justifyContent="space-between"
                     p="2"
                     borderBottom="2px"
-                    borderColor="gray.600"
+                    borderColor={themeBorder}
                     bg={
                       currentLeaderBoardQuizId === quizId._id ? "gray.500" : {}
                     }

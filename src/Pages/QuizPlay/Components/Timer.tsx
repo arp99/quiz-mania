@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,9 +12,10 @@ const RenderTime = ({ remainingTime }: { remainingTime: number }) => {
   const { currentQuiz, currScore } = useAppSelector((state) => state.quiz);
   const quizDispatch = useAppDispatch();
   const navigate = useNavigate();
+  const themeBgColor = useColorModeValue("gray.300", "gray.700");
 
   const submitQuiz = async () => {
-    quizDispatch(getTotalScore());
+    quizDispatch(getTotalScore());  
     const reqArgs = {
       quizId: currentQuiz?._id,
       score: currScore,
@@ -39,7 +40,7 @@ const RenderTime = ({ remainingTime }: { remainingTime: number }) => {
       fontSize={{ base: "sm", md: "lg" }}
       letterSpacing="0.1rem"
       p={{ base: "0.5rem", md: "1rem" }}
-      bg="gray.300"
+      bg={themeBgColor}
     >
       <Text>
         Timer :{" "}
